@@ -9,7 +9,7 @@ import Button from "primevue/button";
 import InputNumber from "primevue/inputnumber";
 import Dialog from "primevue/dialog";
 
-
+/* eslint-disable */
 const app = createApp(App)
 app.use(PrimeVue);
 app.component('Menubar' ,Menubar)
