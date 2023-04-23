@@ -9,6 +9,7 @@ import Button from "primevue/button";
 import InputNumber from "primevue/inputnumber";
 import Dialog from "primevue/dialog";
 import Toast from "primevue/toast";
+import Dropdown from "primevue/dropdown";
 
 export const app = createApp(App)
 app.use(PrimeVue);
@@ -18,5 +19,6 @@ app.component('Menubar' ,Menubar)
     .component('InputNumber', InputNumber)
     .component('Dialog', Dialog)
     .component('Toast', Toast)
+    .component('Dropdown', Dropdown)
 app.mount('#app')
 

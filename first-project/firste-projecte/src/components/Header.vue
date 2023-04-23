@@ -13,9 +13,13 @@
       <label for="grid-col">Grid Columns</label>
     </span>
       <span class="p-float-label">
-      <InputNumber id="grid-row" v-model="gridRows" inputId="integeronly"/>
+      <InputNumber id="grid-row" v-model="gridRows" inputId="grid-row"/>
       <label for="grid-row">Grid Rows</label>
     </span>
+      <div class="p-float-label">
+        <Dropdown style="width: 13rem;" v-model="selectedAlgorithm" inputId="dd-algorithms" :options="algorithms"  class="w-full" />
+        <label for="dd-algorithms">Select Algorithm</label>
+      </div>
       <Button @click="setNodes()" label="Apply Settings"></Button>
     </div>
   </Dialog>
@@ -29,6 +33,10 @@ import {getInitialGrid, resetAllClasses, visualizeShortestPath} from "@/composab
 let gridRows = ref(20);
 let gridColumns = ref(50)
 let isDialogVisible = ref(false);
+let selectedAlgorithm = ref()
+
+const algorithms = ['Dijkstra', 'A*']
+
 const items = ref([
   {
     label: 'Grid Config',
