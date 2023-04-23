@@ -13,43 +13,45 @@ defineProps({
   row: Number,
 })
 
-function getOperationBasedOnClick(row: number, col: number, operation: NodeOperation) {
-  const newGrid = GridNodes.grid.slice();
-  const node = newGrid[row][col];
-  let newNode;
-  switch (operation) {
-    case NodeOperation.setFinishNode:
-      if (GridNodes.selectedEnd?.row && GridNodes.selectedEnd?.col) {
-        newGrid[GridNodes.selectedEnd?.row][GridNodes.selectedEnd?.col].isFinish = false
-      }
-      newNode = {
-        ...node,
-        isFinish: !node.isFinish,
-        isWall: false,
-      };
-      GridNodes.selectedEnd = newNode
-      break
-    case NodeOperation.setStartingNode:
-      if (GridNodes.selectedStart?.row && GridNodes.selectedStart?.col) {
-        newGrid[GridNodes.selectedStart.row][GridNodes.selectedStart?.col].isStart = false
-      }
-      newNode = {
-        ...node,
-        isStart: !node.isStart,
-        isWall: false,
-      };
-      GridNodes.selectedStart = newNode
-      break
-    default:
-      newNode = {
-        ...node,
-        isWall: !node.isWall,
-      };
-      break
-  }
+function getOperationBasedOnClick(row: number | undefined, col: number | undefined, operation: NodeOperation) {
+  if (row !== undefined && col !== undefined) {
+    const newGrid = GridNodes.grid.slice();
+    const node = newGrid[row][col];
+    let newNode;
+    switch (operation) {
+      case NodeOperation.setFinishNode:
+        if (GridNodes.selectedEnd?.row && GridNodes.selectedEnd?.col) {
+          newGrid[GridNodes.selectedEnd?.row][GridNodes.selectedEnd?.col].isFinish = false
+        }
+        newNode = {
+          ...node,
+          isFinish: !node.isFinish,
+          isWall: false,
+        };
+        GridNodes.selectedEnd = newNode
+        break
+      case NodeOperation.setStartingNode:
+        if (GridNodes.selectedStart?.row && GridNodes.selectedStart?.col) {
+          newGrid[GridNodes.selectedStart.row][GridNodes.selectedStart?.col].isStart = false
+        }
+        newNode = {
+          ...node,
+          isStart: !node.isStart,
+          isWall: false,
+        };
+        GridNodes.selectedStart = newNode
+        break
+      default:
+        newNode = {
+          ...node,
+          isWall: !node.isWall,
+        };
+        break
+    }
 
-  newGrid[row][col] = newNode as GridNode;
-  GridNodes.grid = newGrid as [GridNode[]];
+    newGrid[row][col] = newNode as GridNode;
+    GridNodes.grid = newGrid as [GridNode[]];
+  }
 }
 
 </script>
@@ -86,7 +88,7 @@ function getOperationBasedOnClick(row: number, col: number, operation: NodeOpera
 }
 
 .node-visited {
-  background-color: purple ;
+  background-color: purple;
 }
 
 .wall-node {
