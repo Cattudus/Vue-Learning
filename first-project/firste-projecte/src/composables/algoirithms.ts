@@ -1,4 +1,5 @@
 import type {GridNode} from "@/interfaces/node";
+import {app} from '@/main';
 
 export function dijkstra(grid: [GridNode[]], startNode: GridNode, finishNode: GridNode) {
     const visitedNodesInOrder = [];
@@ -12,6 +13,12 @@ export function dijkstra(grid: [GridNode[]], startNode: GridNode, finishNode: Gr
                 continue
             }
             if (closestNode.distance === Infinity) {
+                app.config.globalProperties.$toast.add({
+                    severity: 'error',
+                    summary: 'Can\'t Reach Finish!',
+                    detail: 'Please Remove Walls That Blocking To Reach Finish',
+                    life: 8000
+                })
                 return visitedNodesInOrder
             }
             closestNode.isVisited = true;

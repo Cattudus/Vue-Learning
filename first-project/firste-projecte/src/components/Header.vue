@@ -41,8 +41,7 @@ const items = ref([
     label: 'Reset Grid',
     icon: 'pi pi-fw pi-refresh',
     command: () => {
-      GridNodes.selectedEnd = undefined;
-      GridNodes.selectedStart = undefined;
+      setNodes()
       resetAllClasses()
     }
   },
@@ -57,6 +56,8 @@ const items = ref([
 
 function setNodes() {
   GridNodes.grid = getInitialGrid(gridColumns.value, gridRows.value)
+  GridNodes.selectedEnd = undefined;
+  GridNodes.selectedStart = undefined;
 }
 </script>
 

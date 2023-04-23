@@ -4,7 +4,7 @@ import Map from "@/components/Map.vue";
 import {onMounted} from "vue";
 import {GridNodes} from "@/state-management/GridNodes";
 import {getInitialGrid} from "@/composables/gridOperations";
-/* eslint-disable */
+
 onMounted(() => {
   GridNodes.grid = getInitialGrid(50, 20)
 })
@@ -17,6 +17,7 @@ onMounted(() => {
   <main>
     <Map/>
   </main>
+  <Toast/>
 </template>
 
 <style scoped>
