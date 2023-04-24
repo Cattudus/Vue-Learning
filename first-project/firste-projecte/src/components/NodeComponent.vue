@@ -60,7 +60,7 @@ function getOperationBasedOnClick(row: number | undefined, col: number | undefin
   <div :class="{'start-node': isStart, 'end-node': isFinish, 'wall-node': isWall}"
        class="node" :id="`node-${row}-${col}`"
        @click.left.ctrl.exact="getOperationBasedOnClick(row, col, NodeOperation.setWall)"
-       @click.right="getOperationBasedOnClick(row, col, NodeOperation.setFinishNode)"
+       @click.right.prevent="getOperationBasedOnClick(row, col, NodeOperation.setFinishNode)"
        @click.left.exact="getOperationBasedOnClick(row, col, NodeOperation.setStartingNode)">
   </div>
 
@@ -71,20 +71,22 @@ function getOperationBasedOnClick(row: number | undefined, col: number | undefin
   width: 25px;
   height: 25px;
   background-color: white;
-  transition: 0.6s;
-  border: 1px solid black;
+  transition: 0.3s;
+  border: 1px solid #6d6d6d;
+  cursor: pointer;
 }
 
 .node:hover {
-  background-color: #a7a5a5;
+  background-color: #cacaca;
+  transform: scale(1.2);
 }
 
 .start-node {
-  background-color: green !important;
+  background-color: #5df15d !important;
 }
 
 .end-node {
-  background-color: red !important;
+  background-color: #e51e1e !important;
 }
 
 .node-visited {

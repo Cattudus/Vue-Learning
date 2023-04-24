@@ -6,7 +6,9 @@ export interface GridNode {
     isVisited: boolean,
     distance: number,
     isWall: boolean,
-    previousNode: any
+    previousNode: GridNode | null,
+    totalDistance: number,
+    heuristic: number
 }
 
 export enum NodeOperation{
