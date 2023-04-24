@@ -46,18 +46,26 @@ const items = ref([
     }
   },
   {
-    label: 'Shortest Path',
-    icon: 'pi pi-fw pi-sitemap',
-    command: () => {
-      router.push('/')
-    }
-  }, {
-    label: 'Translate',
-    icon: 'pi pi-fw pi-question',
-    command: () => {
-      router.push('/translate')
-    }
+    label: 'Switch Route',
+    icon: 'pi pi-fw pi-external-link',
+    items:
+        [{
+          label: 'Shortest Path',
+          icon: 'pi pi-fw pi-sitemap',
+          command: () => {
+            router.push('/')
+          }
+        },
+          {
+            label: 'Translate',
+            icon: 'pi pi-fw pi-question',
+            command: () => {
+              router.push('/translate')
+            }
+          }
+        ]
   }
+
 ]);
 
 </script>
