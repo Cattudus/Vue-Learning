@@ -22,11 +22,16 @@ import {GridNodes} from "@/state-management/GridNodes";
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  padding: 1rem;
 }
 
 .grid-row {
   display: flex;
   gap: 0.25rem;
   padding-top: 0.25rem;
+  padding-left: 1rem;
 }
 </style>

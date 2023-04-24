@@ -3,7 +3,7 @@ import Header from "@/components/Header.vue";
 import Map from "@/components/Map.vue";
 import {onMounted, watch} from "vue";
 import {GridNodes} from "@/state-management/GridNodes";
-import {getInitialGrid} from "@/composables/gridOperations";
+import {getInitialGrid} from "@/shared-functions/gridOperations";
 import {useToast} from "primevue/usetoast";
 import {ToastMessage} from "@/state-management/ToastMessage";
 
@@ -31,4 +31,5 @@ watch(() => ToastMessage.toast,
 </template>
 
 <style scoped>
+
 </style>

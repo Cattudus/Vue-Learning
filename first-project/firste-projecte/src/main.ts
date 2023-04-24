@@ -4,7 +4,7 @@ import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import Menubar from 'primevue/menubar';
 import "primevue/resources/themes/lara-light-indigo/theme.css";
-import NodeComponent from "@/components/NodeComponent.vue";
+import NodeComponent from "@/shared-ui/NodeComponent.vue";
 
 
 import './assets/main.css'
@@ -13,6 +13,8 @@ import InputNumber from "primevue/inputnumber";
 import Dialog from "primevue/dialog";
 import Toast from "primevue/toast";
 import Dropdown from "primevue/dropdown";
+import InfoDialog from "@/shared-ui/InfoDialog.vue"
+
 
 createApp(App)
     .use(PrimeVue)
@@ -24,6 +26,7 @@ createApp(App)
     .component('Toast', Toast)
     .component('Dropdown', Dropdown)
     .component('NodeComponent', NodeComponent)
+    .component('InfoDialog', InfoDialog)
     .mount('#app')
 
 

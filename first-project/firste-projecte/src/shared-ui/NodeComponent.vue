@@ -20,7 +20,7 @@ function getOperationBasedOnClick(row: number | undefined, col: number | undefin
     let newNode;
     switch (operation) {
       case NodeOperation.setFinishNode:
-        if (GridNodes.selectedEnd?.row && GridNodes.selectedEnd?.col) {
+        if (GridNodes.selectedEnd?.row !== undefined && GridNodes.selectedEnd?.col !== undefined) {
           newGrid[GridNodes.selectedEnd?.row][GridNodes.selectedEnd?.col].isFinish = false
         }
         newNode = {
@@ -31,7 +31,7 @@ function getOperationBasedOnClick(row: number | undefined, col: number | undefin
         GridNodes.selectedEnd = newNode
         break
       case NodeOperation.setStartingNode:
-        if (GridNodes.selectedStart?.row && GridNodes.selectedStart?.col) {
+        if (GridNodes.selectedStart?.row !== undefined && GridNodes.selectedStart?.col !== undefined) {
           newGrid[GridNodes.selectedStart.row][GridNodes.selectedStart?.col].isStart = false
         }
         newNode = {

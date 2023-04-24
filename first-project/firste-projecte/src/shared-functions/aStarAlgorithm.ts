@@ -1,5 +1,6 @@
 import type {GridNode} from "@/interfaces/node";
-import {getAllNodes, getNeighbors, sortNodesByDistance} from "@/composables/algorithmFunction";
+import {getAllNodes, getNeighbors, sortNodesByDistance} from "@/shared-functions/algorithmFunction";
+import {ToastMessage} from "@/state-management/ToastMessage";
 
 export function astar(grid: [GridNode[]], startNode: GridNode, finishNode: GridNode) {
     const visitedNodesInOrder = [];
@@ -13,19 +14,29 @@ export function astar(grid: [GridNode[]], startNode: GridNode, finishNode: GridN
         if (current?.isWall) {
             continue
         }
-        if (current === finishNode){
+        if (current?.distance === Infinity) {
+            ToastMessage.toast = {
+                severity: 'error',
+                summary: 'Can\'t Reach Finish!',
+                detail: 'Please Remove Walls That Blocking To Reach Finish',
+                life: 8000
+            }
+            return []
+        }
+        ;
+        if (current === finishNode) {
             return visitedNodesInOrder as GridNode[];
         }
         visitedNodesInOrder.push(current);
-        if(current !== undefined) {
+        if (current !== undefined) {
             let neighbors = getNeighbors(current, grid)
             for (const neighbor of neighbors) {
-                if(!visitedNodesInOrder.includes(neighbor)){
-                    let possibleTotal = current.totalDistance +1;
+                if (!visitedNodesInOrder.includes(neighbor)) {
+                    let possibleTotal = current.totalDistance + 1;
 
-                    if(!unvisitedNodes.includes(neighbor)){
+                    if (!unvisitedNodes.includes(neighbor)) {
                         unvisitedNodes.push(neighbor);
-                    }else if(possibleTotal >= neighbor.totalDistance){
+                    } else if (possibleTotal >= neighbor.totalDistance) {
                         continue
                     }
                     neighbor.totalDistance = possibleTotal;

@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import HelpDialog from "@/components/HelpDialog.vue"
+import HelpNode from "@/components/HelpNode.vue";
 import {ref, watch} from "vue";
-import {GridNodes} from "@/state-management/GridNodes";
-import {getInitialGrid, resetAllClasses, visualizeShortestPath} from "@/composables/gridOperations";
-import {AlgorithmsEnum} from "@/composables/algorithmFunction";
+import {setNodes, visualizeShortestPath} from "@/shared-functions/gridOperations";
+import {AlgorithmsEnum} from "@/shared-functions/algorithmFunction";
+import {aStarinfo, dijkstrainfo} from "@/assets/mocks/aboutAlgorithm";
 
 let gridRows = ref(20);
 let gridColumns = ref(50)
 let isDialogVisible = ref(false);
 let selectedAlgorithm = ref({name: 'Dijkstra Algorithm', id: AlgorithmsEnum.Dijkstra})
-let gridChanged = false;
 let showHelpDialog = ref(false)
+let showAlgorithmDialog = ref(false)
+
+const aStarInfo = ref(aStarinfo)
+const dijkstraInfo = ref(dijkstrainfo)
 
 const algorithms = [{name: 'Dijkstra Algorithm', id: AlgorithmsEnum.Dijkstra}, {
   name: 'A* Algorithm',
@@ -29,9 +32,7 @@ const items = ref([
     label: 'Reset Grid',
     icon: 'pi pi-fw pi-refresh',
     command: () => {
-      gridChanged = true
-      setNodes(true)
-      resetAllClasses()
+      setNodes(true, true, gridColumns.value, gridRows.value)
     }
   },
   {
@@ -43,38 +44,6 @@ const items = ref([
   }
 ]);
 
-watch(gridRows, () => {
-  gridChanged = true;
-})
-watch(gridColumns, () => {
-  gridChanged = true;
-})
-
-function setNodes(resetStartFinish: boolean) {
-  if (gridChanged) {
-    GridNodes.grid = getInitialGrid(gridColumns.value, gridRows.value)
-  } else {
-    GridNodes.grid = getInitialGrid(gridColumns.value, gridRows.value)
-    const newStart = GridNodes.grid[GridNodes.selectedStart!.row][GridNodes.selectedStart!.col];
-    const newEnd = GridNodes.grid[GridNodes.selectedEnd!.row][GridNodes.selectedEnd!.col];
-    newStart.isStart = true;
-    GridNodes.selectedStart = newStart;
-    newEnd.isFinish = true;
-    GridNodes.selectedEnd = newEnd;
-
-    GridNodes.walls.forEach(wallNode => {
-      GridNodes.grid[wallNode.row][wallNode.col].isWall = true
-      wallNode = GridNodes.grid[wallNode.row][wallNode.col]
-    })
-  }
-  if (resetStartFinish) {
-    GridNodes.selectedEnd = undefined;
-    GridNodes.walls = [];
-    GridNodes.selectedStart = undefined;
-  }
-  resetAllClasses()
-  gridChanged = false;
-}
 </script>
 
 <template>
@@ -84,9 +53,31 @@ function setNodes(resetStartFinish: boolean) {
         <div>Fastest Path</div>
       </template>
       <template #end>
+        <div class="help-text">Algorithm Info <i @mouseover="showAlgorithmDialog = true"
+                                                 @mouseleave="showAlgorithmDialog = false"
+                                                 class="pi pi-question-circle"/></div>
+        <InfoDialog v-if="showAlgorithmDialog">
+          <div class="algorithm-info">
+            {{
+              selectedAlgorithm.id === AlgorithmsEnum.Astar ? aStarInfo : dijkstraInfo
+            }}
+          </div>
+        </InfoDialog>
+
+
         <div class="help-text">Help <i @mouseover="showHelpDialog = true" @mouseleave="showHelpDialog = false"
                                        class="pi pi-question-circle"/></div>
-        <HelpDialog v-if="showHelpDialog"/>
+        <InfoDialog v-if="showHelpDialog">
+          <div>
+            <HelpNode :is-start="true" text="To select START press LEFT mouse button"/>
+          </div>
+          <div>
+            <HelpNode :is-wall="true" text="To select WALL press LEFT mouse button with CTRL"/>
+          </div>
+          <div>
+            <HelpNode :is-finish="true" text="To select FINISH press RIGHT mouse button"/>
+          </div>
+        </InfoDialog>
       </template>
     </Menubar>
   </div>
@@ -106,7 +97,8 @@ function setNodes(resetStartFinish: boolean) {
                   class="w-full"/>
         <label for="dd-algorithms">Select Algorithm</label>
       </div>
-      <Button @click="setNodes(false); isDialogVisible= false" label="Apply Settings"></Button>
+      <Button @click="setNodes(false, false,gridColumns,gridRows); isDialogVisible= false"
+              label="Apply Settings"></Button>
     </div>
   </Dialog>
 </template>
@@ -125,5 +117,10 @@ function setNodes(resetStartFinish: boolean) {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.algorithm-info {
+  width: 45rem;
+  white-space: break-spaces;
 }
 </style>

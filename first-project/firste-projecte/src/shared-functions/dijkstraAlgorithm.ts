@@ -1,5 +1,5 @@
 import type {GridNode} from "@/interfaces/node";
-import {getAllNodes, getNeighbors, sortNodesByDistance} from "@/composables/algorithmFunction";
+import {getAllNodes, getNeighbors, sortNodesByDistance} from "@/shared-functions/algorithmFunction";
 import {ToastMessage} from "@/state-management/ToastMessage";
 
 
@@ -15,13 +15,13 @@ export function dijkstra(grid: [GridNode[]], startNode: GridNode, finishNode: Gr
                 continue
             }
             if (closestNode.distance === Infinity) {
-                ToastMessage.toast ={
+                ToastMessage.toast = {
                     severity: 'error',
                     summary: 'Can\'t Reach Finish!',
                     detail: 'Please Remove Walls That Blocking To Reach Finish',
                     life: 8000
                 }
-                return visitedNodesInOrder
+                return []
             }
             closestNode.isVisited = true;
             visitedNodesInOrder.push(closestNode);

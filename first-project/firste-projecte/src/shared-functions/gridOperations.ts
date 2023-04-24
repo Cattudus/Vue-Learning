@@ -1,8 +1,8 @@
 import type {GridNode} from "@/interfaces/node";
 import {GridNodes} from "@/state-management/GridNodes";
-import {AlgorithmsEnum, getAllNodes, getNodesInShortestPathOrder} from "@/composables/algorithmFunction";
-import {astar} from "@/composables/aStarAlgorithm";
-import {dijkstra} from "@/composables/dijkstraAlgorithm";
+import {AlgorithmsEnum, getAllNodes, getNodesInShortestPathOrder} from "@/shared-functions/algorithmFunction";
+import {astar} from "@/shared-functions/aStarAlgorithm";
+import {dijkstra} from "@/shared-functions/dijkstraAlgorithm";
 import {ToastMessage} from "@/state-management/ToastMessage";
 
 export function getInitialGrid(gridCol: number, gridRow: number) {
@@ -98,7 +98,7 @@ function getCorrectClass(node: GridNode) {
     return ''
 }
 
-export function resetAllClasses() {
+function resetAllClasses() {
     const allNodes = getAllNodes(GridNodes.grid)
 
     allNodes.forEach(value => {
@@ -108,4 +108,35 @@ export function resetAllClasses() {
                 `node ${getCorrectClass(value)}`;
         }
     })
+}
+
+export function setNodes(resetStartFinish: boolean, gridChanged: boolean, gridColumns: number, gridRows: number) {
+    if (gridChanged) {
+        GridNodes.grid = getInitialGrid(gridColumns, gridRows)
+    } else {
+        GridNodes.grid = getInitialGrid(gridColumns, gridRows)
+
+        if (GridNodes.selectedStart !== undefined) {
+            const newStart = GridNodes.grid[GridNodes.selectedStart.row][GridNodes.selectedStart.col];
+            newStart.isStart = true;
+            GridNodes.selectedStart = newStart;
+        }
+
+        if (GridNodes.selectedEnd !== undefined) {
+            const newEnd = GridNodes.grid[GridNodes.selectedEnd!.row][GridNodes.selectedEnd!.col];
+            newEnd.isFinish = true;
+            GridNodes.selectedEnd = newEnd;
+        }
+
+        GridNodes.walls.forEach(wallNode => {
+            GridNodes.grid[wallNode.row][wallNode.col].isWall = true
+            wallNode = GridNodes.grid[wallNode.row][wallNode.col]
+        })
+    }
+    if (resetStartFinish) {
+        GridNodes.selectedEnd = undefined;
+        GridNodes.walls = [];
+        GridNodes.selectedStart = undefined;
+    }
+    resetAllClasses()
 }
