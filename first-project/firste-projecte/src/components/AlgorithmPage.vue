@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import Map from "@/components/Map.vue";
 import {useToast} from "primevue/usetoast";
 import {onMounted, watch} from "vue";
