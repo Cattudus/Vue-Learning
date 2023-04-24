@@ -4,6 +4,7 @@ import {ref, watch} from "vue";
 import {setNodes, visualizeShortestPath} from "@/shared-functions/gridOperations";
 import {AlgorithmsEnum} from "@/shared-functions/algorithmFunction";
 import {aStarinfo, dijkstrainfo} from "@/assets/mocks/aboutAlgorithm";
+import {useRouter} from "vue-router";
 
 let gridRows = ref(20);
 let gridColumns = ref(50)
@@ -19,6 +20,8 @@ const algorithms = [{name: 'Dijkstra Algorithm', id: AlgorithmsEnum.Dijkstra}, {
   name: 'A* Algorithm',
   id: AlgorithmsEnum.Astar
 }]
+
+const router = useRouter()
 
 const items = ref([
   {
@@ -40,6 +43,19 @@ const items = ref([
     icon: 'pi pi-fw pi-power-off',
     command: () => {
       visualizeShortestPath(selectedAlgorithm.value.id)
+    }
+  },
+  {
+    label: 'Shortest Path',
+    icon: 'pi pi-fw pi-sitemap',
+    command: () => {
+      router.push('/')
+    }
+  }, {
+    label: 'Translate',
+    icon: 'pi pi-fw pi-question',
+    command: () => {
+      router.push('/translate')
     }
   }
 ]);
