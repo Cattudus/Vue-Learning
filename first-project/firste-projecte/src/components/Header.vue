@@ -12,12 +12,6 @@ let selectedAlgorithm = ref({name: 'Dijkstra Algorithm', id: AlgorithmsEnum.Dijk
 let gridChanged = false;
 let showHelpDialog = ref(false)
 
-watch(gridRows, () => {
-  gridChanged = true;
-})
-watch(gridColumns, () => {
-  gridChanged = true;
-})
 const algorithms = [{name: 'Dijkstra Algorithm', id: AlgorithmsEnum.Dijkstra}, {
   name: 'A* Algorithm',
   id: AlgorithmsEnum.Astar
@@ -49,12 +43,33 @@ const items = ref([
   }
 ]);
 
-function setNodes(resetStarFinish: boolean) {
+watch(gridRows, () => {
+  gridChanged = true;
+})
+watch(gridColumns, () => {
+  gridChanged = true;
+})
+
+function setNodes(resetStartFinish: boolean) {
   if (gridChanged) {
     GridNodes.grid = getInitialGrid(gridColumns.value, gridRows.value)
+  } else {
+    GridNodes.grid = getInitialGrid(gridColumns.value, gridRows.value)
+    const newStart = GridNodes.grid[GridNodes.selectedStart!.row][GridNodes.selectedStart!.col];
+    const newEnd = GridNodes.grid[GridNodes.selectedEnd!.row][GridNodes.selectedEnd!.col];
+    newStart.isStart = true;
+    GridNodes.selectedStart = newStart;
+    newEnd.isFinish = true;
+    GridNodes.selectedEnd = newEnd;
+
+    GridNodes.walls.forEach(wallNode => {
+      GridNodes.grid[wallNode.row][wallNode.col].isWall = true
+      wallNode = GridNodes.grid[wallNode.row][wallNode.col]
+    })
   }
-  if (resetStarFinish) {
+  if (resetStartFinish) {
     GridNodes.selectedEnd = undefined;
+    GridNodes.walls = [];
     GridNodes.selectedStart = undefined;
   }
   resetAllClasses()
@@ -69,7 +84,8 @@ function setNodes(resetStarFinish: boolean) {
         <div>Fastest Path</div>
       </template>
       <template #end>
-        <div class="help-text">Help <i @mouseover="showHelpDialog = true" @mouseleave="showHelpDialog = false" class="pi pi-question-circle"/></div>
+        <div class="help-text">Help <i @mouseover="showHelpDialog = true" @mouseleave="showHelpDialog = false"
+                                       class="pi pi-question-circle"/></div>
         <HelpDialog v-if="showHelpDialog"/>
       </template>
     </Menubar>

@@ -3,8 +3,7 @@ import {GridNodes} from "@/state-management/GridNodes";
 import {AlgorithmsEnum, getAllNodes, getNodesInShortestPathOrder} from "@/composables/algorithmFunction";
 import {astar} from "@/composables/aStarAlgorithm";
 import {dijkstra} from "@/composables/dijkstraAlgorithm";
-import {useToast} from "primevue/usetoast";
-import {app} from "@/main";
+import {ToastMessage} from "@/state-management/ToastMessage";
 
 export function getInitialGrid(gridCol: number, gridRow: number) {
     const grid = [];
@@ -71,12 +70,12 @@ export function visualizeShortestPath(selectedAlgorithm: AlgorithmsEnum) {
     if (GridNodes.grid && GridNodes.selectedStart && GridNodes.selectedEnd) {
         animatePath(getCorrectAlgorithm(selectedAlgorithm) ?? [], getNodesInShortestPathOrder(GridNodes.selectedEnd))
     } else {
-        app.config.globalProperties.$toast.add({
+        ToastMessage.toast = {
             severity: 'error',
             summary: 'Can\'t Find Start or End!',
             detail: 'Please Select Start and End',
             life: 8000
-        })
+        }
     }
 }
 
@@ -88,16 +87,25 @@ function getCorrectAlgorithm(selectedAlgorithm: AlgorithmsEnum) {
     }
 }
 
+function getCorrectClass(node: GridNode) {
+    if (node.isStart) {
+        return 'start-node'
+    } else if (node.isFinish) {
+        return 'end-node'
+    } else if (node.isWall) {
+        return 'wall-node'
+    }
+    return ''
+}
+
 export function resetAllClasses() {
     const allNodes = getAllNodes(GridNodes.grid)
+
     allNodes.forEach(value => {
         const nodeDOM = document.getElementById(`node-${value.row}-${value.col}`);
-        if (nodeDOM && (nodeDOM.className.includes('start-node') || nodeDOM.className.includes('end-node'))) {
+        if (nodeDOM) {
             nodeDOM.className =
-                `${nodeDOM.className.includes('start-node') ? 'start-node' : 'end-node'} node`;
-        } else if (nodeDOM) {
-            nodeDOM.className =
-                'node';
+                `node ${getCorrectClass(value)}`;
         }
     })
 }

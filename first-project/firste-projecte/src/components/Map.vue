@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import NodeComponent from "@/components/NodeComponent.vue";
 import {GridNodes} from "@/state-management/GridNodes";
 
 
