@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import HelpNode from "@/components/HelpNode.vue";
 import {ref, watch} from "vue";
-import {setNodes, visualizeShortestPath} from "@/shared-functions/gridOperations";
-import {AlgorithmsEnum} from "@/shared-functions/algorithmFunction";
+import {setNodes, visualizeShortestPath} from "@/utils/gridOperations";
+import {AlgorithmsEnum} from "@/utils/algorithmFunction";
 import {aStarinfo, dijkstrainfo} from "@/assets/mocks/aboutAlgorithm";
 import {useRouter} from "vue-router";
 
@@ -57,10 +57,10 @@ const items = ref([
           }
         },
           {
-            label: 'Translate',
+            label: 'Todo Page',
             icon: 'pi pi-fw pi-question',
             command: () => {
-              router.push('/translate')
+              router.push('/todo')
             }
           }
         ]

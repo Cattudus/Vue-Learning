@@ -3,7 +3,7 @@ import Map from "@/components/Map.vue";
 import {useToast} from "primevue/usetoast";
 import {onMounted, watch} from "vue";
 import {GridNodes} from "@/state-management/GridNodes";
-import {getInitialGrid} from "@/shared-functions/gridOperations";
+import {getInitialGrid} from "@/utils/gridOperations";
 import {ToastMessage} from "@/state-management/ToastMessage";
 
 const toast = useToast();

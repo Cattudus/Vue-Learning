@@ -15,12 +15,12 @@ import Dropdown from "primevue/dropdown";
 import InfoDialog from "@/shared-ui/InfoDialog.vue"
 
 import AlgorithmPage from "@/components/AlgorithmPage.vue";
-import TranslatePage from "@/components/TranslatePage.vue";
+import TodoListPage from "@/components/TodoListPage.vue";
 import {createRouter, createWebHashHistory} from "vue-router";
 
 const routes = [
     { path: '/', component: AlgorithmPage },
-    { path: '/translate', component: TranslatePage },
+    { path: '/todo', component: TodoListPage },
 ]
 
 const router = createRouter({

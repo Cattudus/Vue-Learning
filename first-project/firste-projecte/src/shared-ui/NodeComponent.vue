@@ -46,9 +46,9 @@ function getOperationBasedOnClick(row: number | undefined, col: number | undefin
           ...node,
           isWall: !node.isWall,
         };
-        const isWallAlreadySelected = GridNodes.walls.indexOf(node);
-        if (isWallAlreadySelected >= 0) {
-          GridNodes.walls.splice(isWallAlreadySelected, 1)
+
+        if (node.isWall) {
+          GridNodes.removeWall(node)
         } else {
           GridNodes.walls.push(newNode)
         }

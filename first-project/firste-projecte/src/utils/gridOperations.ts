@@ -1,8 +1,8 @@
 import type {GridNode} from "@/interfaces/node";
 import {GridNodes} from "@/state-management/GridNodes";
-import {AlgorithmsEnum, getAllNodes, getNodesInShortestPathOrder} from "@/shared-functions/algorithmFunction";
-import {astar} from "@/shared-functions/aStarAlgorithm";
-import {dijkstra} from "@/shared-functions/dijkstraAlgorithm";
+import {AlgorithmsEnum, getAllNodes, getNodesInShortestPathOrder} from "@/utils/algorithmFunction";
+import {astar} from "@/utils/aStarAlgorithm";
+import {dijkstra} from "@/utils/dijkstraAlgorithm";
 import {ToastMessage} from "@/state-management/ToastMessage";
 
 export function getInitialGrid(gridCol: number, gridRow: number) {

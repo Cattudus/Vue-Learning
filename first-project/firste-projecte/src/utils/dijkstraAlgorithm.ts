@@ -1,5 +1,5 @@
 import type {GridNode} from "@/interfaces/node";
-import {getAllNodes, getNeighbors, sortNodesByDistance} from "@/shared-functions/algorithmFunction";
+import {getAllNodes, getNeighbors, sortNodesByDistance} from "@/utils/algorithmFunction";
 import {ToastMessage} from "@/state-management/ToastMessage";
 
 
