@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {GridNodes} from "@/state-management/GridNodes";
+import HelpComponent from "@/shared-ui/HelpComponent.vue";
 
 
 </script>
@@ -13,6 +14,10 @@ import {GridNodes} from "@/state-management/GridNodes";
                        :is-wall="node.isWall"/>
       </div>
     </div>
+  </div>
+  <div class="help-card">
+    How To
+    <HelpComponent/>
   </div>
 </template>
 
@@ -33,5 +38,14 @@ import {GridNodes} from "@/state-management/GridNodes";
   gap: 0.25rem;
   padding-top: 0.25rem;
   padding-left: 1rem;
+}
+.help-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 </style>

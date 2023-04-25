@@ -16,6 +16,8 @@ import InfoDialog from "@/shared-ui/InfoDialog.vue"
 
 import AlgorithmPage from "@/components/AlgorithmPage.vue";
 import TodoListPage from "@/components/TodoListPage.vue";
+import HelpNode from "@/shared-ui/HelpNode.vue";
+import HelpComponent from "@/shared-ui/HelpComponent.vue"
 import {createRouter, createWebHashHistory} from "vue-router";
 
 const routes = [
@@ -40,6 +42,8 @@ createApp(App)
     .component('Dropdown', Dropdown)
     .component('NodeComponent', NodeComponent)
     .component('InfoDialog', InfoDialog)
+    .component('HelpNode', HelpNode)
+    .component('HelpComponent', HelpComponent)
     .mount('#app')
 
 

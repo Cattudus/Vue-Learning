@@ -119,24 +119,23 @@ export function setNodes(resetStartFinish: boolean, gridChanged: boolean, gridCo
         if (GridNodes.selectedStart !== undefined) {
             const newStart = GridNodes.grid[GridNodes.selectedStart.row][GridNodes.selectedStart.col];
             newStart.isStart = true;
-            GridNodes.selectedStart = newStart;
+            GridNodes.setSelectedNode(newStart, true);
         }
 
         if (GridNodes.selectedEnd !== undefined) {
             const newEnd = GridNodes.grid[GridNodes.selectedEnd!.row][GridNodes.selectedEnd!.col];
             newEnd.isFinish = true;
-            GridNodes.selectedEnd = newEnd;
+            GridNodes.setSelectedNode(newEnd, false);
         }
 
         GridNodes.walls.forEach(wallNode => {
             GridNodes.grid[wallNode.row][wallNode.col].isWall = true
-            wallNode = GridNodes.grid[wallNode.row][wallNode.col]
         })
     }
     if (resetStartFinish) {
-        GridNodes.selectedEnd = undefined;
-        GridNodes.walls = [];
-        GridNodes.selectedStart = undefined;
+        GridNodes.setSelectedNode(undefined, false);
+        GridNodes.setWalls([]);
+        GridNodes.setSelectedNode(undefined, true);
     }
     resetAllClasses()
 }

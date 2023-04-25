@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import HelpNode from "@/components/HelpNode.vue";
 import {ref, watch} from "vue";
 import {setNodes, visualizeShortestPath} from "@/utils/gridOperations";
 import {AlgorithmsEnum} from "@/utils/algorithmFunction";
@@ -92,15 +91,7 @@ const items = ref([
         <div class="help-text">Help <i @mouseover="showHelpDialog = true" @mouseleave="showHelpDialog = false"
                                        class="pi pi-question-circle"/></div>
         <InfoDialog v-if="showHelpDialog">
-          <div>
-            <HelpNode :is-start="true" text="To select START press LEFT mouse button"/>
-          </div>
-          <div>
-            <HelpNode :is-wall="true" text="To select WALL press LEFT mouse button with CTRL"/>
-          </div>
-          <div>
-            <HelpNode :is-finish="true" text="To select FINISH press RIGHT mouse button"/>
-          </div>
+          <HelpComponent/>
         </InfoDialog>
       </template>
     </Menubar>

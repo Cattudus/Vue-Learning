@@ -28,7 +28,7 @@ function getOperationBasedOnClick(row: number | undefined, col: number | undefin
           isFinish: !node.isFinish,
           isWall: false,
         };
-        GridNodes.selectedEnd = newNode
+        GridNodes.setSelectedNode(newNode, false)
         break
       case NodeOperation.setStartingNode:
         if (GridNodes.selectedStart?.row !== undefined && GridNodes.selectedStart?.col !== undefined) {
@@ -39,7 +39,7 @@ function getOperationBasedOnClick(row: number | undefined, col: number | undefin
           isStart: !node.isStart,
           isWall: false,
         };
-        GridNodes.selectedStart = newNode
+        GridNodes.setSelectedNode(newNode, true)
         break
       default:
         newNode = {
@@ -50,7 +50,7 @@ function getOperationBasedOnClick(row: number | undefined, col: number | undefin
         if (node.isWall) {
           GridNodes.removeWall(node)
         } else {
-          GridNodes.walls.push(newNode)
+          GridNodes.addToWalls(newNode)
         }
         break
     }
