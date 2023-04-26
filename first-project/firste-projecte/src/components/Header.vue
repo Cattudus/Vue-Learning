@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import {setNodes, visualizeShortestPath} from "@/utils/gridOperations";
 import {AlgorithmsEnum} from "@/utils/algorithmFunction";
 import {aStarinfo, dijkstrainfo} from "@/assets/mocks/aboutAlgorithm";
@@ -11,6 +11,7 @@ let isDialogVisible = ref(false);
 let selectedAlgorithm = ref({name: 'Dijkstra Algorithm', id: AlgorithmsEnum.Dijkstra})
 let showHelpDialog = ref(false)
 let showAlgorithmDialog = ref(false)
+let showHeaderHelp = ref(true)
 
 const aStarInfo = ref(aStarinfo)
 const dijkstraInfo = ref(dijkstrainfo)
@@ -22,14 +23,42 @@ const algorithms = [{name: 'Dijkstra Algorithm', id: AlgorithmsEnum.Dijkstra}, {
 
 const router = useRouter()
 
-const items = ref([
+function changeHeaderTemplate(isShortestPath: boolean) {
+  showHeaderHelp.value = isShortestPath
+  items.value = isShortestPath ? shortestPath : todo
+}
+
+const todo = [
   {
-    label: 'Grid Config',
-    icon: 'pi pi-fw pi-cog',
-    command: () => {
-      isDialogVisible.value = true
-    }
-  },
+    label: 'Switch Route',
+    icon: 'pi pi-fw pi-external-link',
+    items:
+        [{
+          label: 'Shortest Path',
+          icon: 'pi pi-fw pi-sitemap',
+          command: () => {
+            router.push('/')
+            changeHeaderTemplate(true)
+          }
+        },
+          {
+            label: 'Todo Page',
+            icon: 'pi pi-fw pi-question',
+            command: () => {
+              router.push('/todo')
+              changeHeaderTemplate(false)
+            }
+          }
+        ]
+  }]
+
+const shortestPath = [{
+  label: 'Grid Config',
+  icon: 'pi pi-fw pi-cog',
+  command: () => {
+    isDialogVisible.value = true
+  }
+},
   {
     label: 'Reset Grid',
     icon: 'pi pi-fw pi-refresh',
@@ -53,6 +82,7 @@ const items = ref([
           icon: 'pi pi-fw pi-sitemap',
           command: () => {
             router.push('/')
+            changeHeaderTemplate(true)
           }
         },
           {
@@ -60,12 +90,22 @@ const items = ref([
             icon: 'pi pi-fw pi-question',
             command: () => {
               router.push('/todo')
+              changeHeaderTemplate(false)
             }
           }
         ]
-  }
+  }]
+const items = ref(shortestPath);
 
-]);
+onMounted(() => {
+  router.isReady().then(() => {
+    if (router.currentRoute.value.path === '/todo') {
+      showHeaderHelp.value = false
+      items.value = todo
+    }
+  })
+
+})
 
 </script>
 
@@ -75,7 +115,7 @@ const items = ref([
       <template #start>
         <div>Fastest Path</div>
       </template>
-      <template #end>
+      <template v-if="showHeaderHelp" #end>
         <div class="help-text">Algorithm Info <i @mouseover="showAlgorithmDialog = true"
                                                  @mouseleave="showAlgorithmDialog = false"
                                                  class="pi pi-question-circle"/></div>

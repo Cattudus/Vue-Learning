@@ -1,9 +1,20 @@
 <script setup lang="ts">
 import {TodoList} from "@/state-management/TodoList";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import TodoItem from "@/shared-ui/TodoItem.vue";
 
 let todoName = ref(null)
+
+onMounted(() =>{
+  TodoList.loadTodos()
+})
+
+function addTodo() {
+  if (todoName.value !== null ) {
+    TodoList.addNewTodo(todoName.value)
+    todoName.value = null
+  }
+}
 </script>
 
 <template>
@@ -22,7 +33,7 @@ let todoName = ref(null)
             <InputText id="todoname" v-model="todoName"></InputText>
            <label for="todoname">Todo Name</label>
         </span>
-        <Button @click="TodoList.addNewTodo(todoName); todoName = null">Add Todo</Button>
+        <Button @click="addTodo()">Add Todo</Button>
       </div>
     </div>
   </div>
@@ -44,18 +55,21 @@ let todoName = ref(null)
 }
 
 .todo-content {
-  min-width: 10rem;
+  min-width: 25rem;
   min-height: 10rem;
   max-height: 25rem;
+  max-width: 30rem;
   overflow: auto;
 }
 
-.todo{
-  padding: 0.25rem 0 ;
+.todo {
+  padding: 0.25rem 0;
 }
+
 .todo-footer {
   display: flex;
   gap: 1rem;
   padding-top: 2rem;
+  justify-content: center;
 }
 </style>
