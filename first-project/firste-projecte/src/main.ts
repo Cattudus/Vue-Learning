@@ -17,8 +17,10 @@ import InfoDialog from "@/shared-ui/InfoDialog.vue"
 import AlgorithmPage from "@/components/AlgorithmPage.vue";
 import TodoListPage from "@/components/TodoListPage.vue";
 import HelpNode from "@/shared-ui/HelpNode.vue";
+import TodoItem from "@/shared-ui/TodoItem.vue";
 import HelpComponent from "@/shared-ui/HelpComponent.vue"
 import {createRouter, createWebHashHistory} from "vue-router";
+import InputText from "primevue/inputtext";
 
 const routes = [
     { path: '/', component: AlgorithmPage },
@@ -37,6 +39,7 @@ createApp(App)
     .component('Menubar', Menubar)
     .component('Button', Button)
     .component('InputNumber', InputNumber)
+    .component('InputText', InputText)
     .component('Dialog', Dialog)
     .component('Toast', Toast)
     .component('Dropdown', Dropdown)
@@ -44,6 +47,7 @@ createApp(App)
     .component('InfoDialog', InfoDialog)
     .component('HelpNode', HelpNode)
     .component('HelpComponent', HelpComponent)
+    .component('TodoItem', TodoItem)
     .mount('#app')
 
 
