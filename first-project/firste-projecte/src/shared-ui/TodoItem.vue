@@ -47,8 +47,11 @@ function removeTodo(name: string | undefined, isFinished: boolean) {
 }
 
 .finished-todo {
-  text-decoration-line: line-through;
   border: 1px solid #81f381;
+}
+
+.finished-todo span{
+  text-decoration-line: line-through;
 }
 
 .todo-name{
